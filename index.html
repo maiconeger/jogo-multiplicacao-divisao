@@ -1,0 +1,2304 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MULTIDIVI AVENTURA: TABUADAS DO 1 AO 5</title>
+  <!-- Google Fonts: Fredoka & Nunito -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Nunito:wght@600;700;800;900&display=swap" rel="stylesheet">
+  
+  <style>
+    :root {
+      --primary: #4F46E5;
+      --primary-hover: #4338CA;
+      --primary-light: #EEF2FF;
+      --accent: #F59E0B;
+      --accent-green: #10B981;
+      --accent-pink: #EC4899;
+      --accent-purple: #8B5CF6;
+      --accent-blue: #0284C7;
+      --bg: #F8FAFC;
+      --card-bg: #FFFFFF;
+      --text: #1E293B;
+      --text-muted: #64748B;
+      --border: #CBD5E1;
+      --radius: 1.25rem;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      user-select: none;
+      -webkit-user-select: none;
+      /* FONTE MAIÚSCULA / LETRA BASTÃO PARA ALFABETIZAÇÃO */
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+    }
+
+    body {
+      font-family: 'Fredoka', cursive, 'Nunito', sans-serif;
+      background: linear-gradient(135deg, #E0F2FE 0%, #EDE9FE 50%, #FEF3C7 100%);
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      overflow-x: hidden;
+    }
+
+    .app-container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 1rem;
+      width: 100%;
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      flex: 1;
+    }
+
+    /* Top Bar */
+    header {
+      background: rgba(255, 255, 255, 0.96);
+      backdrop-filter: blur(10px);
+      border-radius: var(--radius);
+      padding: 0.85rem 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.05);
+      border: 3px solid rgba(255, 255, 255, 0.9);
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      cursor: pointer;
+    }
+
+    .brand-icon {
+      font-size: 2.4rem;
+      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.1));
+      animation: bounce 2s infinite ease-in-out;
+    }
+
+    .brand-title {
+      font-size: 1.7rem;
+      font-weight: 700;
+      background: linear-gradient(45deg, #4F46E5, #EC4899);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      line-height: 1.1;
+      letter-spacing: 0.8px;
+    }
+
+    .brand-subtitle {
+      font-size: 0.82rem;
+      color: var(--text-muted);
+      font-weight: 700;
+    }
+
+    .stats-bar {
+      display: flex;
+      align-items: center;
+      gap: 1rem;
+      background: #F1F5F9;
+      padding: 0.45rem 1.1rem;
+      border-radius: 9999px;
+      font-weight: 800;
+      font-size: 0.95rem;
+      border: 2px solid #E2E8F0;
+    }
+
+    .stat-pill {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+    }
+
+    .header-actions {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-icon {
+      background: white;
+      border: 2px solid var(--border);
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 1.25rem;
+      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    .btn-icon:hover {
+      transform: scale(1.1);
+      border-color: var(--primary);
+    }
+
+    .btn-icon:active {
+      transform: scale(0.95);
+    }
+
+    /* VIEW SCREENS */
+    .view-screen {
+      display: none;
+      flex-direction: column;
+      gap: 1.25rem;
+      animation: fadeIn 0.3s ease;
+    }
+
+    .view-screen.active-screen {
+      display: flex;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* HUB DE TABUADAS */
+    .hub-hero-card {
+      background: rgba(255, 255, 255, 0.96);
+      border-radius: var(--radius);
+      padding: 1.75rem 2rem;
+      box-shadow: 0 15px 30px -5px rgba(0,0,0,0.05);
+      border: 3px solid white;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+    }
+
+    .hub-title-section {
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .hub-heading {
+      font-size: 2rem;
+      color: #1E293B;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      line-height: 1.2;
+    }
+
+    .hub-instruction {
+      font-size: 1.15rem;
+      color: #475569;
+      max-width: 700px;
+      font-weight: 600;
+      line-height: 1.4;
+    }
+
+    /* Cards das Tabuadas (1 ao 5) */
+    .tables-selection-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+      gap: 1rem;
+    }
+
+    .table-toggle-card {
+      background: #F8FAFC;
+      border: 3px solid #CBD5E1;
+      border-radius: 1.25rem;
+      padding: 1.2rem 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.6rem;
+      cursor: pointer;
+      transition: all 0.25s cubic-bezier(0.34, 1.56, 0.64, 1);
+      position: relative;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.03);
+    }
+
+    .table-toggle-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 10px 20px -3px rgba(0,0,0,0.08);
+      border-color: #94A3B8;
+    }
+
+    .table-toggle-card.selected {
+      background: white;
+      transform: translateY(-4px) scale(1.02);
+      box-shadow: 0 12px 25px -4px rgba(79, 70, 229, 0.2);
+    }
+
+    .table-toggle-card[data-table="1"].selected { border-color: #8B5CF6; background: #FAF5FF; }
+    .table-toggle-card[data-table="2"].selected { border-color: #0284C7; background: #F0F9FF; }
+    .table-toggle-card[data-table="3"].selected { border-color: #10B981; background: #F0FDF4; }
+    .table-toggle-card[data-table="4"].selected { border-color: #F59E0B; background: #FEFCE8; }
+    .table-toggle-card[data-table="5"].selected { border-color: #EC4899; background: #FDF2F8; }
+
+    .table-badge-num {
+      width: 54px;
+      height: 54px;
+      border-radius: 1rem;
+      background: white;
+      border: 2px solid #E2E8F0;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      font-weight: 700;
+      color: #334155;
+      box-shadow: 0 4px 6px rgba(0,0,0,0.05);
+    }
+
+    .table-toggle-card.selected .table-badge-num {
+      color: white;
+      border-color: transparent;
+    }
+    .table-toggle-card[data-table="1"].selected .table-badge-num { background: #8B5CF6; }
+    .table-toggle-card[data-table="2"].selected .table-badge-num { background: #0284C7; }
+    .table-toggle-card[data-table="3"].selected .table-badge-num { background: #10B981; }
+    .table-toggle-card[data-table="4"].selected .table-badge-num { background: #F59E0B; }
+    .table-toggle-card[data-table="5"].selected .table-badge-num { background: #EC4899; }
+
+    .table-card-title {
+      font-size: 1.25rem;
+      font-weight: 700;
+      color: #1E293B;
+      text-align: center;
+    }
+
+    .table-card-desc {
+      font-size: 0.85rem;
+      color: #64748B;
+      font-weight: 700;
+      text-align: center;
+    }
+
+    .table-check-indicator {
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: #94A3B8;
+      margin-top: 0.25rem;
+    }
+
+    .table-toggle-card.selected .table-check-indicator {
+      color: #059669;
+    }
+
+    /* Filtros Rápidos & Operação */
+    .filter-controls-row {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      background: #F8FAFC;
+      border: 2px solid #CBD5E1;
+      border-radius: 1rem;
+      padding: 0.75rem 1.25rem;
+    }
+
+    .quick-preset-btns {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem;
+      align-items: center;
+    }
+
+    .btn-chip {
+      background: white;
+      border: 2px solid #CBD5E1;
+      padding: 0.45rem 1rem;
+      border-radius: 9999px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      color: #475569;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .btn-chip:hover {
+      background: #EEF2FF;
+      color: var(--primary);
+      border-color: var(--primary);
+    }
+
+    .op-toggle-group {
+      display: flex;
+      align-items: center;
+      background: #E2E8F0;
+      padding: 0.3rem;
+      border-radius: 9999px;
+      gap: 0.3rem;
+    }
+
+    .btn-op-tab {
+      background: transparent;
+      border: none;
+      padding: 0.45rem 1.1rem;
+      border-radius: 9999px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      color: #475569;
+      cursor: pointer;
+      transition: all 0.2s ease;
+    }
+
+    .btn-op-tab.active {
+      background: white;
+      color: var(--primary);
+      box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+    }
+
+    /* Lista de Atividades */
+    .activities-list-section {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    .list-header-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      padding: 0 0.5rem;
+    }
+
+    .list-counter-text {
+      font-size: 1.35rem;
+      color: #1E293B;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 700;
+    }
+
+    .btn-start-all {
+      background: linear-gradient(135deg, #10B981 0%, #059669 100%);
+      color: white;
+      border: none;
+      padding: 0.85rem 1.85rem;
+      border-radius: 9999px;
+      font-size: 1.15rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      box-shadow: 0 10px 20px -5px rgba(16, 185, 129, 0.4);
+      transition: all 0.2s ease;
+    }
+
+    .btn-start-all:hover {
+      transform: translateY(-2px) scale(1.03);
+      box-shadow: 0 15px 25px -5px rgba(16, 185, 129, 0.5);
+    }
+
+    .activities-cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(290px, 1fr));
+      gap: 1rem;
+    }
+
+    .activity-item-card {
+      background: white;
+      border: 3px solid #CBD5E1;
+      border-radius: 1.25rem;
+      padding: 1.15rem;
+      display: flex;
+      flex-direction: column;
+      gap: 0.8rem;
+      transition: all 0.2s ease;
+      position: relative;
+      cursor: pointer;
+      box-shadow: 0 2px 4px rgba(0,0,0,0.02);
+    }
+
+    .activity-item-card:hover {
+      transform: translateY(-3px);
+      border-color: var(--primary);
+      box-shadow: 0 10px 20px -5px rgba(79, 70, 229, 0.12);
+    }
+
+    .activity-item-card.completed {
+      border-color: #86EFAC;
+      background: #F0FDF4;
+    }
+
+    .card-top-row {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 0.5rem;
+    }
+
+    .card-type-pill {
+      font-size: 0.78rem;
+      font-weight: 800;
+      padding: 0.25rem 0.7rem;
+      border-radius: 9999px;
+      letter-spacing: 0.5px;
+    }
+
+    .card-type-pill.mult {
+      background: #EEF2FF;
+      color: #4338CA;
+      border: 1px solid #C7D2FE;
+    }
+
+    .card-type-pill.div {
+      background: #E0F2FE;
+      color: #0369A1;
+      border: 1px solid #BAE6FD;
+    }
+
+    .card-page-badge {
+      font-size: 0.82rem;
+      color: #64748B;
+      font-weight: 700;
+    }
+
+    .card-main-info {
+      display: flex;
+      align-items: center;
+      gap: 0.85rem;
+    }
+
+    .card-emoji-visual {
+      font-size: 2.3rem;
+      background: #F8FAFC;
+      border-radius: 1rem;
+      width: 62px;
+      height: 62px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #E2E8F0;
+      flex-shrink: 0;
+    }
+
+    .card-text-details {
+      display: flex;
+      flex-direction: column;
+      gap: 0.25rem;
+    }
+
+    .card-title-text {
+      font-size: 1.05rem;
+      color: #1E293B;
+      line-height: 1.3;
+      font-weight: 700;
+    }
+
+    .card-formula-chip {
+      font-weight: 800;
+      color: var(--primary);
+      font-size: 1.05rem;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+    }
+
+    .card-bottom-actions {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      border-top: 2px dashed #E2E8F0;
+      padding-top: 0.6rem;
+      margin-top: 0.2rem;
+    }
+
+    .card-status-badge {
+      display: flex;
+      align-items: center;
+      gap: 0.3rem;
+      font-size: 0.85rem;
+      font-weight: 800;
+      color: #64748B;
+    }
+
+    .card-status-badge.done {
+      color: #15803D;
+    }
+
+    .btn-play-card {
+      background: #EEF2FF;
+      color: var(--primary);
+      border: none;
+      padding: 0.4rem 1rem;
+      border-radius: 0.6rem;
+      font-size: 0.95rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      transition: all 0.15s ease;
+    }
+
+    .btn-play-card:hover {
+      background: var(--primary);
+      color: white;
+    }
+
+    /* TELA DO JOGO */
+    .game-nav-bar {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      background: white;
+      border: 3px solid white;
+      padding: 0.65rem 1.25rem;
+      border-radius: 1rem;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.04);
+    }
+
+    .btn-back-hub {
+      background: #F1F5F9;
+      border: 2px solid #CBD5E1;
+      border-radius: 9999px;
+      padding: 0.5rem 1.2rem;
+      font-size: 1rem;
+      font-weight: 700;
+      color: #475569;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.4rem;
+      transition: all 0.2s ease;
+    }
+
+    .btn-back-hub:hover {
+      border-color: var(--primary);
+      color: var(--primary);
+      background: #EEF2FF;
+    }
+
+    .game-session-status {
+      font-size: 1.15rem;
+      color: #334155;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 700;
+    }
+
+    .game-stage {
+      background: rgba(255, 255, 255, 0.96);
+      border-radius: var(--radius);
+      padding: 1.5rem;
+      box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.05);
+      border: 3px solid rgba(255, 255, 255, 0.9);
+      display: flex;
+      flex-direction: column;
+      gap: 1.25rem;
+      position: relative;
+    }
+
+    .mission-banner {
+      background: linear-gradient(135deg, #EEF2FF 0%, #F5F3FF 100%);
+      border: 2px solid #C7D2FE;
+      border-radius: 1rem;
+      padding: 1.1rem 1.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .mission-text-container {
+      display: flex;
+      align-items: center;
+      gap: 0.75rem;
+      flex: 1;
+    }
+
+    .mission-badge {
+      background: var(--primary);
+      color: white;
+      padding: 0.35rem 0.85rem;
+      border-radius: 9999px;
+      font-size: 0.95rem;
+      font-weight: 700;
+      white-space: nowrap;
+    }
+
+    .mission-prompt {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #312E81;
+      line-height: 1.3;
+    }
+
+    .page-tag {
+      background: white;
+      border: 2px solid #C7D2FE;
+      color: #4F46E5;
+      padding: 0.35rem 0.8rem;
+      border-radius: 0.75rem;
+      font-size: 0.9rem;
+      font-weight: 800;
+      white-space: nowrap;
+    }
+
+    .source-tray-section {
+      background: #F8FAFC;
+      border: 3px dashed #CBD5E1;
+      border-radius: 1rem;
+      padding: 1.1rem;
+      text-align: center;
+    }
+
+    .tray-title {
+      font-size: 1rem;
+      font-weight: 800;
+      color: var(--text-muted);
+      margin-bottom: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.4rem;
+    }
+
+    .tray-items-grid {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.75rem;
+      justify-content: center;
+      align-items: center;
+      min-height: 72px;
+    }
+
+    .game-token {
+      width: 60px;
+      height: 60px;
+      background: white;
+      border: 3px solid #CBD5E1;
+      border-radius: 1rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.1rem;
+      cursor: grab;
+      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.08);
+      position: relative;
+    }
+
+    .game-token:hover {
+      transform: scale(1.15) rotate(4deg);
+      border-color: var(--primary);
+      box-shadow: 0 10px 15px -3px rgba(79, 70, 229, 0.2);
+    }
+
+    .game-token:active {
+      cursor: grabbing;
+      transform: scale(0.95);
+    }
+
+    .game-token.selected {
+      border-color: var(--accent);
+      background: #FEF3C7;
+      transform: scale(1.15);
+      animation: pulse 1s infinite alternate;
+    }
+
+    .containers-area {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 1.25rem;
+      padding: 1rem 0;
+      min-height: 240px;
+    }
+
+    .container-box {
+      flex: 1 1 200px;
+      max-width: 250px;
+      min-width: 180px;
+      background: #FFFFFF;
+      border: 3px solid #CBD5E1;
+      border-radius: 1.25rem;
+      padding: 1rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 0.75rem;
+      position: relative;
+      transition: all 0.25s ease;
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+    }
+
+    .container-box.drag-over {
+      border-color: var(--primary);
+      background: #EEF2FF;
+      transform: scale(1.03);
+    }
+
+    .container-box.ready-state {
+      border-color: var(--accent-green);
+    }
+
+    .container-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: 100%;
+    }
+
+    .container-name {
+      font-size: 1.1rem;
+      color: #475569;
+      display: flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-weight: 700;
+    }
+
+    .container-count-badge {
+      background: #F1F5F9;
+      color: #334155;
+      font-weight: 800;
+      font-size: 0.95rem;
+      padding: 0.25rem 0.65rem;
+      border-radius: 9999px;
+      border: 2px solid #CBD5E1;
+    }
+
+    .container-box.ready-state .container-count-badge {
+      background: #DCFCE7;
+      color: #166534;
+      border-color: #86EFAC;
+    }
+
+    .container-art {
+      font-size: 3.6rem;
+      margin: -0.25rem 0;
+      filter: drop-shadow(0 4px 6px rgba(0,0,0,0.08));
+    }
+
+    .container-slots {
+      width: 100%;
+      min-height: 85px;
+      background: #F8FAFC;
+      border: 3px dashed #CBD5E1;
+      border-radius: 0.85rem;
+      padding: 0.5rem;
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .container-actions {
+      display: flex;
+      gap: 0.5rem;
+      width: 100%;
+    }
+
+    .btn-container-quick {
+      flex: 1;
+      background: #F1F5F9;
+      border: 2px solid #E2E8F0;
+      border-radius: 0.6rem;
+      padding: 0.4rem 0.5rem;
+      font-size: 0.88rem;
+      font-weight: 800;
+      color: #475569;
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+
+    .btn-container-quick:hover {
+      background: #E2E8F0;
+      color: var(--primary);
+      border-color: var(--primary);
+    }
+
+    .solution-zone {
+      background: white;
+      border: 3px solid #CBD5E1;
+      border-radius: 1.25rem;
+      padding: 1.25rem;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1rem;
+    }
+
+    .equation-display {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0.75rem;
+      font-size: 2.2rem;
+      font-weight: 700;
+      color: #1E293B;
+      flex-wrap: wrap;
+    }
+
+    .equation-num {
+      background: #EEF2FF;
+      color: #4338CA;
+      padding: 0.2rem 1rem;
+      border-radius: 0.75rem;
+      border: 3px solid #C7D2FE;
+    }
+
+    .equation-op {
+      color: var(--accent);
+      font-size: 2.4rem;
+    }
+
+    .equation-blank {
+      width: 74px;
+      height: 60px;
+      background: #FEF3C7;
+      border: 3px dashed var(--accent);
+      border-radius: 0.75rem;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2.2rem;
+      color: #B45309;
+      font-weight: 800;
+      transition: all 0.2s ease;
+    }
+
+    .equation-blank.filled {
+      border-style: solid;
+      background: #DCFCE7;
+      border-color: #10B981;
+      color: #065F46;
+    }
+
+    .answer-options-grid {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      gap: 0.75rem;
+    }
+
+    .btn-option {
+      background: white;
+      border: 3px solid #CBD5E1;
+      border-radius: 1rem;
+      width: 62px;
+      height: 62px;
+      font-size: 1.9rem;
+      font-weight: 700;
+      color: #334155;
+      cursor: pointer;
+      transition: all 0.2s cubic-bezier(0.34, 1.56, 0.64, 1);
+      box-shadow: 0 4px 6px -1px rgba(0,0,0,0.05);
+    }
+
+    .btn-option:hover {
+      transform: translateY(-3px) scale(1.08);
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .control-actions-row {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 1rem;
+      justify-content: center;
+      margin-top: 0.5rem;
+    }
+
+    .btn-primary-action {
+      background: linear-gradient(135deg, #4F46E5 0%, #4338CA 100%);
+      color: white;
+      border: none;
+      padding: 0.9rem 2.2rem;
+      border-radius: 9999px;
+      font-size: 1.25rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.6rem;
+      box-shadow: 0 10px 20px -5px rgba(79, 70, 229, 0.4);
+      transition: all 0.2s ease;
+    }
+
+    .btn-primary-action:hover {
+      transform: translateY(-2px) scale(1.03);
+    }
+
+    .btn-secondary-action {
+      background: white;
+      color: #475569;
+      border: 3px solid #CBD5E1;
+      padding: 0.85rem 1.6rem;
+      border-radius: 9999px;
+      font-size: 1.1rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .btn-secondary-action:hover {
+      border-color: #94A3B8;
+      background: #F8FAFC;
+    }
+
+    .visual-proof-card {
+      background: #F0FDF4;
+      border: 3px solid #86EFAC;
+      border-radius: 1rem;
+      padding: 1.25rem;
+      display: none;
+    }
+
+    .proof-title {
+      font-size: 1.3rem;
+      color: #166534;
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+      margin-bottom: 0.5rem;
+      font-weight: 700;
+    }
+
+    .proof-content {
+      font-size: 1.15rem;
+      color: #14532D;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+      font-weight: 700;
+    }
+
+    .proof-addition-chips {
+      display: flex;
+      flex-wrap: wrap;
+      align-items: center;
+      gap: 0.5rem;
+      margin-top: 0.25rem;
+      font-weight: 800;
+    }
+
+    .chip-group {
+      background: white;
+      border: 2px solid #86EFAC;
+      padding: 0.35rem 0.9rem;
+      border-radius: 0.6rem;
+      color: #15803D;
+    }
+
+    /* Modal de Vitória */
+    .overlay-modal {
+      position: fixed;
+      inset: 0;
+      background: rgba(15, 23, 42, 0.65);
+      backdrop-filter: blur(8px);
+      display: none;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 1rem;
+    }
+
+    .modal-card {
+      background: white;
+      border-radius: 2rem;
+      max-width: 520px;
+      width: 100%;
+      padding: 2.5rem 2rem;
+      text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 1.25rem;
+      box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+      border: 4px solid #EEF2FF;
+    }
+
+    .modal-hero-icon {
+      font-size: 4.8rem;
+      animation: bounce 1.2s infinite;
+    }
+
+    .modal-title {
+      font-size: 2.1rem;
+      color: #1E293B;
+      font-weight: 700;
+    }
+
+    .modal-stars {
+      display: flex;
+      gap: 0.5rem;
+      font-size: 2.3rem;
+    }
+
+    #confettiCanvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      pointer-events: none;
+      z-index: 2000;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+    @keyframes pulse {
+      0% { transform: scale(1.05); }
+      100% { transform: scale(1.15); }
+    }
+    @keyframes shake {
+      0%, 100% { transform: translateX(0); }
+      20%, 60% { transform: translateX(-8px); }
+      40%, 80% { transform: translateX(8px); }
+    }
+    .shake-animation { animation: shake 0.4s ease; }
+
+    @media (max-width: 768px) {
+      .brand-title { font-size: 1.35rem; }
+      .hub-heading { font-size: 1.5rem; }
+      .tables-selection-grid { grid-template-columns: repeat(2, 1fr); }
+      .mission-prompt { font-size: 1.2rem; }
+      .container-box { min-width: 140px; }
+      .container-art { font-size: 2.8rem; }
+      .equation-display { font-size: 1.8rem; }
+      .btn-option { width: 52px; height: 52px; font-size: 1.6rem; }
+    }
+  </style>
+</head>
+<body>
+  <canvas id="confettiCanvas"></canvas>
+
+  <div class="app-container">
+    <!-- Header -->
+    <header>
+      <div class="brand" id="brandLogoHome" title="VOLTAR AO INÍCIO">
+        <div class="brand-icon">🎒</div>
+        <div>
+          <div class="brand-title">MULTIDIVI AVENTURA</div>
+          <div class="brand-subtitle">TABUADAS DO 1 AO 5 • MULTIPLICAÇÃO E DIVISÃO</div>
+        </div>
+      </div>
+
+      <div class="stats-bar">
+        <div class="stat-pill" title="PONTOS">
+          <span>🏆</span>
+          <span id="scoreDisplay">0</span>
+        </div>
+        <div class="stat-pill" title="NÍVEL">
+          <span>⭐</span>
+          <span id="levelDisplay">NÍVEL 1</span>
+        </div>
+        <div class="stat-pill" title="SEQUÊNCIA">
+          <span>🔥</span>
+          <span id="streakDisplay">0</span>
+        </div>
+      </div>
+
+      <div class="header-actions">
+        <button id="btnVoice" class="btn-icon" title="OUVIR INSTRUÇÃO EM VOZ ALTA">🗣️</button>
+        <button id="btnSound" class="btn-icon" title="EFEITOS SONOROS">🔊</button>
+        <button id="btnHomeHub" class="btn-icon" title="ESCOLHER TABUADAS">🎯</button>
+      </div>
+    </header>
+
+    <!-- =========================================================
+         TELA 1: HUB INICIAL (SELEÇÃO DE TABUADAS E LISTA)
+         ========================================================= -->
+    <section class="view-screen active-screen" id="hubScreen">
+      <!-- Card Hero de Boas-Vindas -->
+      <div class="hub-hero-card">
+        <div class="hub-title-section">
+          <h1 class="hub-heading">
+            <span>🎯</span>
+            <span>QUAIS TABUADAS VOCÊ QUER TREINAR HOJE?</span>
+          </h1>
+          <p class="hub-instruction">
+            MARQUE AS TABUADAS ABAIXO (DE 1 A 5). O JOGO LISTARÁ TODAS AS ATIVIDADES PRÁTICAS DA APOSTILA CORRESPONDENTES!
+          </p>
+        </div>
+
+        <!-- Seletor de Tabuadas (1 ao 5) -->
+        <div class="tables-selection-grid">
+          <!-- Tabuada do 1 -->
+          <div class="table-toggle-card selected" data-table="1">
+            <div class="table-badge-num">1</div>
+            <div class="table-card-title">TABUADA DO 1</div>
+            <div class="table-card-desc">FATOS COM 1 (IDENTIDADE)</div>
+            <div class="table-check-indicator"><span>✅</span> <span>ATIVA</span></div>
+          </div>
+
+          <!-- Tabuada do 2 -->
+          <div class="table-toggle-card selected" data-table="2">
+            <div class="table-badge-num">2</div>
+            <div class="table-card-title">TABUADA DO 2</div>
+            <div class="table-card-desc">DOBRO & METADE</div>
+            <div class="table-check-indicator"><span>✅</span> <span>ATIVA</span></div>
+          </div>
+
+          <!-- Tabuada do 3 -->
+          <div class="table-toggle-card selected" data-table="3">
+            <div class="table-badge-num">3</div>
+            <div class="table-card-title">TABUADA DO 3</div>
+            <div class="table-card-desc">TRIPLO & TERÇA PARTE</div>
+            <div class="table-check-indicator"><span>✅</span> <span>ATIVA</span></div>
+          </div>
+
+          <!-- Tabuada do 4 -->
+          <div class="table-toggle-card selected" data-table="4">
+            <div class="table-badge-num">4</div>
+            <div class="table-card-title">TABUADA DO 4</div>
+            <div class="table-card-desc">QUÁDRUPLO & QUARTA PARTE</div>
+            <div class="table-check-indicator"><span>✅</span> <span>ATIVA</span></div>
+          </div>
+
+          <!-- Tabuada do 5 -->
+          <div class="table-toggle-card selected" data-table="5">
+            <div class="table-badge-num">5</div>
+            <div class="table-card-title">TABUADA DO 5</div>
+            <div class="table-card-desc">DE 5 EM 5</div>
+            <div class="table-check-indicator"><span>✅</span> <span>ATIVA</span></div>
+          </div>
+        </div>
+
+        <!-- Atalhos Rápidos e Filtro de Operação -->
+        <div class="filter-controls-row">
+          <div class="quick-preset-btns">
+            <span style="font-weight: 800; font-size: 0.9rem; color: #64748B;">ATALHOS:</span>
+            <button class="btn-chip" id="btnSelectAllTables">MARCAR TODAS (1 A 5)</button>
+            <button class="btn-chip" id="btnPreset2and3">APENAS 2 E 3</button>
+            <button class="btn-chip" id="btnPreset4and5">APENAS 4 E 5</button>
+            <button class="btn-chip" id="btnClearTables">LIMPAR</button>
+          </div>
+
+          <div class="op-toggle-group">
+            <button class="btn-op-tab active" data-op="all">✨ TODAS</button>
+            <button class="btn-op-tab" data-op="mult">✖️ MULTIPLICAÇÃO</button>
+            <button class="btn-op-tab" data-op="div">➗ DIVISÃO</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Seção da Lista de Atividades Relacionadas -->
+      <div class="activities-list-section">
+        <div class="list-header-bar">
+          <div class="list-counter-text">
+            <span>📋</span>
+            <span id="listCounterLabel">CARREGANDO ATIVIDADES...</span>
+          </div>
+
+          <button class="btn-start-all" id="btnStartAdventure">
+            <span>🚀 COMEÇAR AVENTURA EM SEQUÊNCIA</span>
+          </button>
+        </div>
+
+        <!-- Grid de Cards de Atividades -->
+        <div class="activities-cards-grid" id="activitiesGrid">
+          <!-- Renderizado via JavaScript -->
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         TELA 2: MESA DO JOGO INTERATIVO
+         ========================================================= -->
+    <section class="view-screen" id="gameScreen">
+      <!-- Barra Superior da Sessão de Jogo -->
+      <div class="game-nav-bar">
+        <button class="btn-back-hub" id="btnReturnToHub">
+          <span>⬅️</span>
+          <span>TROCAR TABUADAS / VER LISTA</span>
+        </button>
+
+        <div class="game-session-status">
+          <span id="gameProgressBadge">MISSÃO 1 DE 10</span>
+          <span style="color: #94A3B8;">•</span>
+          <span style="font-size: 1rem; color: var(--primary); font-weight: 800;" id="gameActiveTablesLabel">TABUADAS: 1, 2, 3</span>
+        </div>
+      </div>
+
+      <!-- Palco Principal -->
+      <main class="game-stage" id="gameStage">
+        <!-- Mission Banner -->
+        <div class="mission-banner">
+          <div class="mission-text-container">
+            <span class="mission-badge" id="missionTypeBadge">MULTIPLICAÇÃO</span>
+            <div class="mission-prompt" id="missionPromptText">
+              CARREGANDO ATIVIDADE...
+            </div>
+          </div>
+          <div class="page-tag" id="missionPageTag">PÁGINA 1</div>
+        </div>
+
+        <!-- Item Source Tray (Mesa de Itens) -->
+        <div class="source-tray-section" id="traySection">
+          <div class="tray-title">
+            <span>📦</span>
+            <span id="trayTitleText">MESA DE ITENS: CLIQUE NO ITEM OU ARRASTE PARA O RECIPIENTE</span>
+            <span id="trayCountBadge" class="container-count-badge" style="margin-left: 0.5rem;">0</span>
+          </div>
+          <div class="tray-items-grid" id="sourceTray"></div>
+        </div>
+
+        <!-- Containers Area -->
+        <div class="containers-area" id="containersArea"></div>
+
+        <!-- Visual Proof Card (Ponte Cognitiva) -->
+        <div class="visual-proof-card" id="proofCard">
+          <div class="proof-title">
+            <span>💡</span>
+            <span id="proofTitleText">MUITO BEM! VEJA COMO FUNCIONA:</span>
+          </div>
+          <div class="proof-content" id="proofContentText"></div>
+        </div>
+
+        <!-- Solution Zone -->
+        <div class="solution-zone" id="solutionZone">
+          <div class="equation-display">
+            <span class="equation-num" id="eqFactor1">2</span>
+            <span class="equation-op" id="eqOperator">×</span>
+            <span class="equation-num" id="eqFactor2">3</span>
+            <span class="equation-op">=</span>
+            <div class="equation-blank" id="eqBlank">?</div>
+          </div>
+
+          <div style="font-weight: 800; color: #475569; font-size: 1.2rem;" id="questionHint">
+            AO TODO, QUANTAS MAÇÃS TEMOS?
+          </div>
+
+          <div class="answer-options-grid" id="optionsGrid"></div>
+
+          <div class="control-actions-row">
+            <button id="btnDistributeStep" class="btn-secondary-action" style="display: none;">
+              <span>🤝</span>
+              <span>DISTRIBUIR 1 A 1</span>
+            </button>
+            <button id="btnResetActivity" class="btn-secondary-action">
+              <span>🔄</span>
+              <span>REINICIAR</span>
+            </button>
+            <button id="btnCheckAnswer" class="btn-primary-action">
+              <span>✨</span>
+              <span>VERIFICAR RESPOSTA</span>
+            </button>
+          </div>
+        </div>
+      </main>
+    </section>
+  </div>
+
+  <!-- Modal de Acerto / Celebração -->
+  <div class="overlay-modal" id="celebrationModal">
+    <div class="modal-card">
+      <div class="modal-hero-icon" id="modalHeroIcon">🎉</div>
+      <h2 class="modal-title" id="modalHeading">SENSACIONAL!</h2>
+      <div class="modal-stars" id="modalStars">⭐⭐⭐</div>
+      <p id="modalExplanation" style="font-size: 1.2rem; color: #475569; line-height: 1.5; font-weight: 700;">
+        VOCÊ AGRUPOU E MULTIPLICOU COM PERFEIÇÃO!
+      </p>
+      <div style="background: #F8FAFC; border: 3px solid #E2E8F0; border-radius: 1rem; padding: 0.85rem 1.6rem; width: 100%;">
+        <span style="font-size: 0.95rem; color: #64748B; font-weight: 800;">PONTOS GANHOS:</span>
+        <div style="font-size: 1.7rem; font-weight: 800; color: var(--accent-green);" id="modalPointsEarned">+100 XP</div>
+      </div>
+      <button class="btn-primary-action" id="btnNextMission" style="width: 100%; justify-content: center;">
+        <span>PRÓXIMA MISSÃO</span>
+        <span>➡️</span>
+      </button>
+    </div>
+  </div>
+
+  <script>
+    /* =========================================================
+       BANCO DE DADOS COMPLETO DAS 18 PÁGINAS DA APOSTILA
+       Total: 108 atividades em MAIÚSCULAS para alfabetização
+       ========================================================= */
+    const RAW_ACTIVITIES = [
+      // PÁGINA 1
+      { id: 1, page: 1, type: 'mult', a: 2, b: 3, item: 'MAÇÃ', itemPlural: 'MAÇÃS', emoji: '🍎', container: 'CESTA', containerPlural: 'CESTAS', containerEmoji: '🧺' },
+      { id: 2, page: 1, type: 'mult', a: 3, b: 2, item: 'BISCOITO', itemPlural: 'BISCOITOS', emoji: '🍪', container: 'PRATO', containerPlural: 'PRATOS', containerEmoji: '🍽️' },
+      { id: 3, page: 1, type: 'mult', a: 4, b: 2, item: 'FLOR', itemPlural: 'FLORES', emoji: '🌸', container: 'VASO', containerPlural: 'VASOS', containerEmoji: '🪴' },
+      { id: 4, page: 1, type: 'mult', a: 5, b: 1, item: 'BOLA', itemPlural: 'BOLAS', emoji: '⚽', container: 'CAIXA', containerPlural: 'CAIXAS', containerEmoji: '📦' },
+      { id: 5, page: 1, type: 'mult', a: 1, b: 5, item: 'LÁPIS', itemPlural: 'LÁPIS', emoji: '✏️', container: 'ESTOJO', containerPlural: 'ESTOJOS', containerEmoji: '👝' },
+      { id: 6, page: 1, type: 'mult', a: 2, b: 4, item: 'MORANGO', itemPlural: 'MORANGOS', emoji: '🍓', container: 'PRATO', containerPlural: 'PRATOS', containerEmoji: '🍽️' },
+
+      // PÁGINA 2
+      { id: 7, page: 2, type: 'mult', a: 2, b: 2, item: 'BOTÃO', itemPlural: 'BOTÕES', emoji: '🔘', container: 'POTE', containerPlural: 'POTES', containerEmoji: '🫙' },
+      { id: 8, page: 2, type: 'mult', a: 3, b: 1, item: 'PIPA', itemPlural: 'PIPAS', emoji: '🪁', container: 'CRIANÇA', containerPlural: 'CRIANÇAS', containerEmoji: '🧒' },
+      { id: 9, page: 2, type: 'mult', a: 2, b: 4, item: 'BORRACHA', itemPlural: 'BORRACHAS', emoji: '🧼', container: 'CAIXA', containerPlural: 'CAIXAS', containerEmoji: '📦' },
+      { id: 10, page: 2, type: 'mult', a: 4, b: 1, item: 'OVO', itemPlural: 'OVOS', emoji: '🥚', container: 'NINHO', containerPlural: 'NINHOS', containerEmoji: '🪺' },
+      { id: 11, page: 2, type: 'mult', a: 1, b: 3, item: 'PERA', itemPlural: 'PERAS', emoji: '🍐', container: 'CESTA', containerPlural: 'CESTAS', containerEmoji: '🧺' },
+      { id: 12, page: 2, type: 'mult', a: 3, b: 3, item: 'BALA', itemPlural: 'BALAS', emoji: '🍬', container: 'SACO', containerPlural: 'SACOS', containerEmoji: '🛍️' },
+
+      // PÁGINA 3
+      { id: 13, page: 3, type: 'mult', a: 2, b: 3, item: 'PASSARINHO', itemPlural: 'PASSARINHOS', emoji: '🐦', container: 'ÁRVORE', containerPlural: 'ÁRVORES', containerEmoji: '🌳' },
+      { id: 14, page: 3, type: 'mult', a: 4, b: 2, item: 'BOLINHO', itemPlural: 'BOLINHOS', emoji: '🧁', container: 'PRATO', containerPlural: 'PRATOS', containerEmoji: '🍽️' },
+      { id: 15, page: 3, type: 'mult', a: 1, b: 4, item: 'CARRINHO', itemPlural: 'CARRINHOS', emoji: '🚗', container: 'CAIXA', containerPlural: 'CAIXAS', containerEmoji: '📦' },
+      { id: 16, page: 3, type: 'mult', a: 3, b: 2, item: 'ROSA', itemPlural: 'ROSAS', emoji: '🌹', container: 'VASO', containerPlural: 'VASOS', containerEmoji: '🪴' },
+      { id: 17, page: 3, type: 'mult', a: 5, b: 1, item: 'CATAVENTO', itemPlural: 'CATAVENTOS', emoji: '🎏', container: 'CRIANÇA', containerPlural: 'CRIANÇAS', containerEmoji: '🧒' },
+      { id: 18, page: 3, type: 'mult', a: 2, b: 5, item: 'LARANJA', itemPlural: 'LARANJAS', emoji: '🍊', container: 'CESTA', containerPlural: 'CESTAS', containerEmoji: '🧺' },
+
+      // PÁGINA 4
+      { id: 19, page: 4, type: 'mult', a: 3, b: 2, item: 'URSINHO', itemPlural: 'URSINHOS', emoji: '🧸', container: 'CAIXA', containerPlural: 'CAIXAS', containerEmoji: '📦' },
+      { id: 20, page: 4, type: 'mult', a: 2, b: 4, item: 'CEREJA', itemPlural: 'CEREJAS', emoji: '🍒', container: 'PRATO', containerPlural: 'PRATOS', containerEmoji: '🍽️' },
+      { id: 21, page: 4, type: 'mult', a: 4, b: 1, item: 'BALÃO', itemPlural: 'BALÕES', emoji: '🎈', container: 'CRIANÇA', containerPlural: 'CRIANÇAS', containerEmoji: '🧒' },
+      { id: 22, page: 4, type: 'mult', a: 1, b: 5, item: 'BOLINHA', itemPlural: 'BOLINHAS', emoji: '🔮', container: 'SACO', containerPlural: 'SACOS', containerEmoji: '🛍️' },
+      { id: 23, page: 4, type: 'mult', a: 3, b: 3, item: 'CENOURA', itemPlural: 'CENOURAS', emoji: '🥕', container: 'CESTA', containerPlural: 'CESTAS', containerEmoji: '🧺' },
+      { id: 24, page: 4, type: 'mult', a: 5, b: 2, item: 'TAMPINHA', itemPlural: 'TAMPINHAS', emoji: '🪙', container: 'POTE', containerPlural: 'POTES', containerEmoji: '🫙' },
+
+      // PÁGINA 5
+      { id: 25, page: 5, type: 'mult', a: 2, b: 2, item: 'PEIXE', itemPlural: 'PEIXES', emoji: '🐟', container: 'AQUÁRIO', containerPlural: 'AQUÁRIOS', containerEmoji: '🫧' },
+      { id: 26, page: 5, type: 'mult', a: 3, b: 4, item: 'GIZ', itemPlural: 'GIZES', emoji: '🖍️', container: 'CAIXA', containerPlural: 'CAIXAS', containerEmoji: '📦' },
+      { id: 27, page: 5, type: 'mult', a: 4, b: 2, item: 'CARTÃO', itemPlural: 'CARTÕES', emoji: '💌', container: 'ENVELOPE', containerPlural: 'ENVELOPES', containerEmoji: '✉️' },
+      { id: 28, page: 5, type: 'mult', a: 1, b: 3, item: 'SANDUÍCHE', itemPlural: 'SANDUÍCHES', emoji: '🥪', container: 'PRATO', containerPlural: 'PRATOS', containerEmoji: '🍽️' },
+      { id: 29, page: 5, type: 'mult', a: 5, b: 1, item: 'TULIPA', itemPlural: 'TULIPAS', emoji: '🌷', container: 'VASO', containerPlural: 'VASOS', containerEmoji: '🪴' },
+      { id: 30, page: 5, type: 'mult', a: 2, b: 5, item: 'PIRULITO', itemPlural: 'PIRULITOS', emoji: '🍭', container: 'POTE', containerPlural: 'POTES', containerEmoji: '🫙' },
+
+      // PÁGINA 6
+      { id: 31, page: 6, type: 'mult', a: 3, b: 3, item: 'UVA', itemPlural: 'UVAS', emoji: '🍇', container: 'PRATO', containerPlural: 'PRATOS', containerEmoji: '🍽️' },
+      { id: 32, page: 6, type: 'mult', a: 2, b: 4, item: 'LIMÃO', itemPlural: 'LIMÕES', emoji: '🍋', container: 'CESTA', containerPlural: 'CESTAS', containerEmoji: '🧺' },
+      { id: 33, page: 6, type: 'mult', a: 4, b: 1, item: 'BONECA', itemPlural: 'BONECAS', emoji: '🪆', container: 'CAIXA', containerPlural: 'CAIXAS', containerEmoji: '📦' },
+      { id: 34, page: 6, type: 'mult', a: 1, b: 4, item: 'CANETA', itemPlural: 'CANETAS', emoji: '🖊️', container: 'ESTOJO', containerPlural: 'ESTOJOS', containerEmoji: '👝' },
+      { id: 35, page: 6, type: 'mult', a: 5, b: 2, item: 'BORBOLETA', itemPlural: 'BORBOLETAS', emoji: '🦋', container: 'FLOR', containerPlural: 'FLORES', containerEmoji: '🌸' },
+      { id: 36, page: 6, type: 'mult', a: 3, b: 2, item: 'PIÃO', itemPlural: 'PIÕES', emoji: '🪀', container: 'SACO', containerPlural: 'SACOS', containerEmoji: '🛍️' },
+
+      // PÁGINA 7
+      { id: 37, page: 7, type: 'mult', a: 2, b: 3, item: 'APITO', itemPlural: 'APITOS', emoji: '🎺', container: 'CAIXA', containerPlural: 'CAIXAS', containerEmoji: '📦' },
+      { id: 38, page: 7, type: 'mult', a: 4, b: 2, item: 'PÊSSEGO', itemPlural: 'PÊSSEGOS', emoji: '🍑', container: 'CESTA', containerPlural: 'CESTAS', containerEmoji: '🧺' },
+      { id: 39, page: 7, type: 'mult', a: 3, b: 1, item: 'LIVRO', itemPlural: 'LIVROS', emoji: '📚', container: 'CRIANÇA', containerPlural: 'CRIANÇAS', containerEmoji: '🧒' },
+      { id: 40, page: 7, type: 'mult', a: 1, b: 5, item: 'COPO', itemPlural: 'COPOS', emoji: '🥛', container: 'BANDEJA', containerPlural: 'BANDEJAS', containerEmoji: '🍱' },
+      { id: 41, page: 7, type: 'mult', a: 2, b: 4, item: 'PRESILHA', itemPlural: 'PRESILHAS', emoji: '🎀', container: 'POTE', containerPlural: 'POTES', containerEmoji: '🫙' },
+      { id: 42, page: 7, type: 'mult', a: 5, b: 3, item: 'BOMBOM', itemPlural: 'BOMBONS', emoji: '🍬', container: 'PRATO', containerPlural: 'PRATOS', containerEmoji: '🍽️' },
+
+      // PÁGINA 8
+      { id: 43, page: 8, type: 'mult', a: 3, b: 2, item: 'FOLHA', itemPlural: 'FOLHAS', emoji: '🍃', container: 'GALHO', containerPlural: 'GALHOS', containerEmoji: '🌿' },
+      { id: 44, page: 8, type: 'mult', a: 2, b: 5, item: 'BLOCO', itemPlural: 'BLOCOS', emoji: '🧱', container: 'CAIXA', containerPlural: 'CAIXAS', containerEmoji: '📦' },
+      { id: 45, page: 8, type: 'mult', a: 4, b: 1, item: 'FATIA DE BOLO', itemPlural: 'FATIAS DE BOLO', emoji: '🍰', container: 'PRATO', containerPlural: 'PRATOS', containerEmoji: '🍽️' },
+      { id: 46, page: 8, type: 'mult', a: 1, b: 3, item: 'ESCOVA', itemPlural: 'ESCOVAS', emoji: '🪥', container: 'POTE', containerPlural: 'POTES', containerEmoji: '🫙' },
+      { id: 47, page: 8, type: 'mult', a: 5, b: 2, item: 'MARGARIDA', itemPlural: 'MARGARIDAS', emoji: '🌼', container: 'VASO', containerPlural: 'VASOS', containerEmoji: '🪴' },
+      { id: 48, page: 8, type: 'mult', a: 3, b: 4, item: 'BANANA', itemPlural: 'BANANAS', emoji: '🍌', container: 'CESTA', containerPlural: 'CESTAS', containerEmoji: '🧺' },
+
+      // PÁGINA 9
+      { id: 49, page: 9, type: 'mult', a: 2, b: 4, item: 'ROBÔ', itemPlural: 'ROBÔS', emoji: '🤖', container: 'CAIXA', containerPlural: 'CAIXAS', containerEmoji: '📦' },
+      { id: 50, page: 9, type: 'mult', a: 3, b: 2, item: 'PÃO', itemPlural: 'PÃES', emoji: '🥖', container: 'PRATO', containerPlural: 'PRATOS', containerEmoji: '🍽️' },
+      { id: 51, page: 9, type: 'mult', a: 4, b: 3, item: 'FIGURINHA', itemPlural: 'FIGURINHAS', emoji: '⭐', container: 'SACO', containerPlural: 'SACOS', containerEmoji: '🛍️' },
+      { id: 52, page: 9, type: 'mult', a: 1, b: 5, item: 'MANGA', itemPlural: 'MANGAS', emoji: '🥭', container: 'CESTA', containerPlural: 'CESTAS', containerEmoji: '🧺' },
+      { id: 53, page: 9, type: 'mult', a: 5, b: 1, item: 'JOANINHA', itemPlural: 'JOANINHAS', emoji: '🐞', container: 'FOLHA', containerPlural: 'FOLHAS', containerEmoji: '🍃' },
+      { id: 54, page: 9, type: 'mult', a: 2, b: 3, item: 'XÍCARA', itemPlural: 'XÍCARAS', emoji: '☕', container: 'BANDEJA', containerPlural: 'BANDEJAS', containerEmoji: '🍱' },
+
+      // PÁGINA 10 (DIVISÃO)
+      { id: 55, page: 10, type: 'div', total: 6, n: 2, item: 'MAÇÃ', itemPlural: 'MAÇÃS', emoji: '🍎', container: 'CESTA', containerPlural: 'CESTAS', containerEmoji: '🧺' },
+      { id: 56, page: 10, type: 'div', total: 6, n: 3, item: 'BOLINHA', itemPlural: 'BOLINHAS', emoji: '⚽', container: 'CAIXA', containerPlural: 'CAIXAS', containerEmoji: '📦' },
+      { id: 57, page: 10, type: 'div', total: 8, n: 4, item: 'BISCOITO', itemPlural: 'BISCOITOS', emoji: '🍪', container: 'PRATO', containerPlural: 'PRATOS', containerEmoji: '🍽️' },
+      { id: 58, page: 10, type: 'div', total: 5, n: 5, item: 'FLOR', itemPlural: 'FLORES', emoji: '🌸', container: 'VASO', containerPlural: 'VASOS', containerEmoji: '🪴' },
+      { id: 59, page: 10, type: 'div', total: 4, n: 1, item: 'LÁPIS', itemPlural: 'LÁPIS', emoji: '✏️', container: 'ESTOJO', containerPlural: 'ESTOJOS', containerEmoji: '👝' },
+      { id: 60, page: 10, type: 'div', total: 4, n: 2, item: 'MORANGO', itemPlural: 'MORANGOS', emoji: '🍓', container: 'PRATO', containerPlural: 'PRATOS', containerEmoji: '🍽️' },
+
+      // PÁGINA 11
+      { id: 61, page: 11, type: 'div', total: 4, n: 2, item: 'PERA', itemPlural: 'PERAS', emoji: '🍐', container: 'CESTA', containerPlural: 'CESTAS', containerEmoji: '🧺' },
+      { id: 62, page: 11, type: 'div', total: 6, n: 3, item: 'BALA', itemPlural: 'BALAS', emoji: '🍬', container: 'SACO', containerPlural: 'SACOS', containerEmoji: '🛍️' },
+      { id: 63, page: 11, type: 'div', total: 8, n: 2, item: 'BOTÃO', itemPlural: 'BOTÕES', emoji: '🔘', container: 'POTE', containerPlural: 'POTES', containerEmoji: '🫙' },
+      { id: 64, page: 11, type: 'div', total: 4, n: 4, item: 'OVO', itemPlural: 'OVOS', emoji: '🥚', container: 'NINHO', containerPlural: 'NINHOS', containerEmoji: '🪺' },
+      { id: 65, page: 11, type: 'div', total: 3, n: 1, item: 'CARRINHO', itemPlural: 'CARRINHOS', emoji: '🚗', container: 'CAIXA', containerPlural: 'CAIXAS', containerEmoji: '📦' },
+      { id: 66, page: 11, type: 'div', total: 10, n: 5, item: 'LARANJA', itemPlural: 'LARANJAS', emoji: '🍊', container: 'CESTA', containerPlural: 'CESTAS', containerEmoji: '🧺' },
+
+      // PÁGINA 12
+      { id: 67, page: 12, type: 'div', total: 6, n: 2, item: 'ROSA', itemPlural: 'ROSAS', emoji: '🌹', container: 'VASO', containerPlural: 'VASOS', containerEmoji: '🪴' },
+      { id: 68, page: 12, type: 'div', total: 9, n: 3, item: 'BOLINHO', itemPlural: 'BOLINHOS', emoji: '🧁', container: 'PRATO', containerPlural: 'PRATOS', containerEmoji: '🍽️' },
+      { id: 69, page: 12, type: 'div', total: 12, n: 4, item: 'LÁPIS', itemPlural: 'LÁPIS', emoji: '✏️', container: 'ESTOJO', containerPlural: 'ESTOJOS', containerEmoji: '👝' },
+      { id: 70, page: 12, type: 'div', total: 5, n: 1, item: 'ADESIVO', itemPlural: 'ADESIVOS', emoji: '⭐', container: 'ENVELOPE', containerPlural: 'ENVELOPES', containerEmoji: '✉️' },
+      { id: 71, page: 12, type: 'div', total: 10, n: 2, item: 'UVA', itemPlural: 'UVAS', emoji: '🍇', container: 'PRATO', containerPlural: 'PRATOS', containerEmoji: '🍽️' },
+      { id: 72, page: 12, type: 'div', total: 5, n: 5, item: 'PIPA', itemPlural: 'PIPAS', emoji: '🪁', container: 'SACO', containerPlural: 'SACOS', containerEmoji: '🛍️' },
+
+      // PÁGINA 13
+      { id: 73, page: 13, type: 'div', total: 8, n: 4, item: 'CENOURA', itemPlural: 'CENOURAS', emoji: '🥕', container: 'CESTA', containerPlural: 'CESTAS', containerEmoji: '🧺' },
+      { id: 74, page: 13, type: 'div', total: 6, n: 2, item: 'URSINHO', itemPlural: 'URSINHOS', emoji: '🧸', container: 'CAIXA', containerPlural: 'CAIXAS', containerEmoji: '📦' },
+      { id: 75, page: 13, type: 'div', total: 12, n: 3, item: 'BOMBOM', itemPlural: 'BOMBONS', emoji: '🍬', container: 'PRATO', containerPlural: 'PRATOS', containerEmoji: '🍽️' },
+      { id: 76, page: 13, type: 'div', total: 4, n: 1, item: 'CANETA', itemPlural: 'CANETAS', emoji: '🖊️', container: 'ESTOJO', containerPlural: 'ESTOJOS', containerEmoji: '👝' },
+      { id: 77, page: 13, type: 'div', total: 10, n: 5, item: 'PIÃO', itemPlural: 'PIÕES', emoji: '🪀', container: 'CAIXA', containerPlural: 'CAIXAS', containerEmoji: '📦' },
+      { id: 78, page: 13, type: 'div', total: 9, n: 3, item: 'CEREJA', itemPlural: 'CEREJAS', emoji: '🍒', container: 'PRATO', containerPlural: 'PRATOS', containerEmoji: '🍽️' },
+
+      // PÁGINA 14
+      { id: 79, page: 14, type: 'div', total: 6, n: 3, item: 'PEIXE', itemPlural: 'PEIXES', emoji: '🐟', container: 'AQUÁRIO', containerPlural: 'AQUÁRIOS', containerEmoji: '🫧' },
+      { id: 80, page: 14, type: 'div', total: 8, n: 2, item: 'BORRACHA', itemPlural: 'BORRACHAS', emoji: '🧼', container: 'CAIXA', containerPlural: 'CAIXAS', containerEmoji: '📦' },
+      { id: 81, page: 14, type: 'div', total: 12, n: 4, item: 'CARTÃO', itemPlural: 'CARTÕES', emoji: '💌', container: 'ENVELOPE', containerPlural: 'ENVELOPES', containerEmoji: '✉️' },
+      { id: 82, page: 14, type: 'div', total: 3, n: 1, item: 'SANDUÍCHE', itemPlural: 'SANDUÍCHES', emoji: '🥪', container: 'BANDEJA', containerPlural: 'BANDEJAS', containerEmoji: '🍱' },
+      { id: 83, page: 14, type: 'div', total: 5, n: 5, item: 'TULIPA', itemPlural: 'TULIPAS', emoji: '🌷', container: 'VASO', containerPlural: 'VASOS', containerEmoji: '🪴' },
+      { id: 84, page: 14, type: 'div', total: 10, n: 2, item: 'PIRULITO', itemPlural: 'PIRULITOS', emoji: '🍭', container: 'POTE', containerPlural: 'POTES', containerEmoji: '🫙' },
+
+      // PÁGINA 15
+      { id: 85, page: 15, type: 'div', total: 6, n: 2, item: 'LIMÃO', itemPlural: 'LIMÕES', emoji: '🍋', container: 'CESTA', containerPlural: 'CESTAS', containerEmoji: '🧺' },
+      { id: 86, page: 15, type: 'div', total: 9, n: 3, item: 'TAMPINHA', itemPlural: 'TAMPINHAS', emoji: '🪙', container: 'POTE', containerPlural: 'POTES', containerEmoji: '🫙' },
+      { id: 87, page: 15, type: 'div', total: 4, n: 4, item: 'BONECA', itemPlural: 'BONECAS', emoji: '🪆', container: 'CAIXA', containerPlural: 'CAIXAS', containerEmoji: '📦' },
+      { id: 88, page: 15, type: 'div', total: 5, n: 1, item: 'PRESILHA', itemPlural: 'PRESILHAS', emoji: '🎀', container: 'ESTOJO', containerPlural: 'ESTOJOS', containerEmoji: '👝' },
+      { id: 89, page: 15, type: 'div', total: 10, n: 5, item: 'MAÇÃ', itemPlural: 'MAÇÃS', emoji: '🍎', container: 'CESTA', containerPlural: 'CESTAS', containerEmoji: '🧺' },
+      { id: 90, page: 15, type: 'div', total: 8, n: 4, item: 'BISCOITO', itemPlural: 'BISCOITOS', emoji: '🍪', container: 'SACO', containerPlural: 'SACOS', containerEmoji: '🛍️' },
+
+      // PÁGINA 16
+      { id: 91, page: 16, type: 'div', total: 6, n: 3, item: 'APITO', itemPlural: 'APITOS', emoji: '🎺', container: 'CAIXA', containerPlural: 'CAIXAS', containerEmoji: '📦' },
+      { id: 92, page: 16, type: 'div', total: 8, n: 4, item: 'PÊSSEGO', itemPlural: 'PÊSSEGOS', emoji: '🍑', container: 'CESTA', containerPlural: 'CESTAS', containerEmoji: '🧺' },
+      { id: 93, page: 16, type: 'div', total: 3, n: 3, item: 'LIVRO', itemPlural: 'LIVROS', emoji: '📚', container: 'CAIXA', containerPlural: 'CAIXAS', containerEmoji: '📦' },
+      { id: 94, page: 16, type: 'div', total: 4, n: 1, item: 'COPO', itemPlural: 'COPOS', emoji: '🥛', container: 'BANDEJA', containerPlural: 'BANDEJAS', containerEmoji: '🍱' },
+      { id: 95, page: 16, type: 'div', total: 10, n: 2, item: 'MORANGO', itemPlural: 'MORANGOS', emoji: '🍓', container: 'PRATO', containerPlural: 'PRATOS', containerEmoji: '🍽️' },
+      { id: 96, page: 16, type: 'div', total: 12, n: 3, item: 'BLOCO', itemPlural: 'BLOCOS', emoji: '🧱', container: 'CAIXA', containerPlural: 'CAIXAS', containerEmoji: '📦' },
+
+      // PÁGINA 17
+      { id: 97, page: 17, type: 'div', total: 6, n: 2, item: 'FOLHA', itemPlural: 'FOLHAS', emoji: '🍃', container: 'ENVELOPE', containerPlural: 'ENVELOPES', containerEmoji: '✉️' },
+      { id: 98, page: 17, type: 'div', total: 8, n: 4, item: 'ROBÔ', itemPlural: 'ROBÔS', emoji: '🤖', container: 'CAIXA', containerPlural: 'CAIXAS', containerEmoji: '📦' },
+      { id: 99, page: 17, type: 'div', total: 12, n: 4, item: 'BANANA', itemPlural: 'BANANAS', emoji: '🍌', container: 'CESTA', containerPlural: 'CESTAS', containerEmoji: '🧺' },
+      { id: 100, page: 17, type: 'div', total: 3, n: 1, item: 'ESCOVA', itemPlural: 'ESCOVAS', emoji: '🪥', container: 'POTE', containerPlural: 'POTES', containerEmoji: '🫙' },
+      { id: 101, page: 17, type: 'div', total: 5, n: 5, item: 'MARGARIDA', itemPlural: 'MARGARIDAS', emoji: '🌼', container: 'VASO', containerPlural: 'VASOS', containerEmoji: '🪴' },
+      { id: 102, page: 17, type: 'div', total: 10, n: 5, item: 'PÃO', itemPlural: 'PÃES', emoji: '🥖', container: 'SACO', containerPlural: 'SACOS', containerEmoji: '🛍️' },
+
+      // PÁGINA 18
+      { id: 103, page: 18, type: 'div', total: 6, n: 3, item: 'FIGURINHA', itemPlural: 'FIGURINHAS', emoji: '⭐', container: 'ENVELOPE', containerPlural: 'ENVELOPES', containerEmoji: '✉️' },
+      { id: 104, page: 18, type: 'div', total: 8, n: 2, item: 'MANGA', itemPlural: 'MANGAS', emoji: '🥭', container: 'CESTA', containerPlural: 'CESTAS', containerEmoji: '🧺' },
+      { id: 105, page: 18, type: 'div', total: 12, n: 3, item: 'XÍCARA', itemPlural: 'XÍCARAS', emoji: '☕', container: 'BANDEJA', containerPlural: 'BANDEJAS', containerEmoji: '🍱' },
+      { id: 106, page: 18, type: 'div', total: 4, n: 4, item: 'JOANINHA', itemPlural: 'JOANINHAS', emoji: '🐞', container: 'FOLHA', containerPlural: 'FOLHAS', containerEmoji: '🍃' },
+      { id: 107, page: 18, type: 'div', total: 5, n: 1, item: 'BOLINHA', itemPlural: 'BOLINHAS', emoji: '🔮', container: 'CAIXA', containerPlural: 'CAIXAS', containerEmoji: '📦' },
+      { id: 108, page: 18, type: 'div', total: 10, n: 2, item: 'GIZ', itemPlural: 'GIZES', emoji: '🖍️', container: 'ESTOJO', containerPlural: 'ESTOJOS', containerEmoji: '👝' }
+    ];
+
+    const ACTIVITIES_DATABASE = RAW_ACTIVITIES.map(act => {
+      let tables = [];
+      if (act.type === 'mult') {
+        tables = Array.from(new Set([act.a, act.b])).filter(x => x <= 5);
+      } else {
+        const quotient = act.total / act.n;
+        tables = Array.from(new Set([act.n, quotient])).filter(x => x <= 5);
+      }
+      return { ...act, tables };
+    });
+
+    /* =========================================================
+       SISTEMA DE ÁUDIO WEB SYNTHESIZER
+       ========================================================= */
+    class AudioController {
+      constructor() { this.ctx = null; this.enabled = true; }
+      init() {
+        if (!this.ctx) {
+          const AudioContext = window.AudioContext || window.webkitAudioContext;
+          if (AudioContext) this.ctx = new AudioContext();
+        }
+      }
+      playTone(freq, type = 'sine', duration = 0.15, gain = 0.2) {
+        if (!this.enabled) return;
+        try {
+          this.init();
+          if (this.ctx.state === 'suspended') this.ctx.resume();
+          const osc = this.ctx.createOscillator();
+          const g = this.ctx.createGain();
+          osc.type = type;
+          osc.frequency.setValueAtTime(freq, this.ctx.currentTime);
+          g.gain.setValueAtTime(gain, this.ctx.currentTime);
+          g.gain.exponentialRampToValueAtTime(0.001, this.ctx.currentTime + duration);
+          osc.connect(g);
+          g.connect(this.ctx.destination);
+          osc.start();
+          osc.stop(this.ctx.currentTime + duration);
+        } catch(e) {}
+      }
+      playPop() {
+        if (!this.enabled) return;
+        try {
+          this.init();
+          const osc = this.ctx.createOscillator();
+          const g = this.ctx.createGain();
+          osc.type = 'triangle';
+          osc.frequency.setValueAtTime(450, this.ctx.currentTime);
+          osc.frequency.exponentialRampToValueAtTime(150, this.ctx.currentTime + 0.08);
+          g.gain.setValueAtTime(0.3, this.ctx.currentTime);
+          g.gain.linearRampToValueAtTime(0.01, this.ctx.currentTime + 0.08);
+          osc.connect(g);
+          g.connect(this.ctx.destination);
+          osc.start();
+          osc.stop(this.ctx.currentTime + 0.08);
+        } catch(e) {}
+      }
+      playSuccess() {
+        if (!this.enabled) return;
+        [261.63, 329.63, 392.00, 523.25].forEach((freq, idx) => {
+          setTimeout(() => this.playTone(freq, 'triangle', 0.25, 0.25), idx * 100);
+        });
+      }
+      playFanfare() {
+        if (!this.enabled) return;
+        const notes = [392.00, 392.00, 392.00, 523.25, 659.25, 783.99];
+        const times = [0, 120, 240, 360, 520, 720];
+        notes.forEach((freq, idx) => {
+          setTimeout(() => this.playTone(freq, 'triangle', 0.35, 0.25), times[idx]);
+        });
+      }
+      playError() {
+        if (!this.enabled) return;
+        this.playTone(180, 'sawtooth', 0.25, 0.18);
+        setTimeout(() => this.playTone(130, 'sawtooth', 0.3, 0.15), 120);
+      }
+    }
+
+    class SpeechController {
+      constructor() { this.enabled = true; }
+      speak(text) {
+        if (!this.enabled || !('speechSynthesis' in window)) return;
+        try {
+          window.speechSynthesis.cancel();
+          const utterance = new SpeechSynthesisUtterance(text);
+          utterance.lang = 'pt-BR';
+          utterance.rate = 0.95;
+          utterance.pitch = 1.1;
+          window.speechSynthesis.speak(utterance);
+        } catch(e) {}
+      }
+    }
+
+    class ConfettiController {
+      constructor(canvasId) {
+        this.canvas = document.getElementById(canvasId);
+        this.ctx = this.canvas.getContext('2d');
+        this.particles = [];
+        this.animationId = null;
+        this.resize();
+        window.addEventListener('resize', () => this.resize());
+      }
+      resize() {
+        this.canvas.width = window.innerWidth;
+        this.canvas.height = window.innerHeight;
+      }
+      start() {
+        this.particles = [];
+        const colors = ['#4F46E5', '#10B981', '#F59E0B', '#EC4899', '#3B82F6', '#8B5CF6'];
+        for (let i = 0; i < 90; i++) {
+          this.particles.push({
+            x: window.innerWidth / 2 + (Math.random() * 200 - 100),
+            y: window.innerHeight / 2 + (Math.random() * 100 - 50),
+            w: Math.random() * 12 + 6,
+            h: Math.random() * 8 + 4,
+            color: colors[Math.floor(Math.random() * colors.length)],
+            vx: (Math.random() - 0.5) * 16,
+            vy: -Math.random() * 14 - 5,
+            gravity: 0.35,
+            rotation: Math.random() * 360,
+            vRot: (Math.random() - 0.5) * 12,
+            life: 1
+          });
+        }
+        if (!this.animationId) this.animate();
+      }
+      animate() {
+        this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+        this.particles.forEach(p => {
+          p.x += p.vx;
+          p.y += p.vy;
+          p.vy += p.gravity;
+          p.rotation += p.vRot;
+          p.life -= 0.012;
+          this.ctx.save();
+          this.ctx.translate(p.x, p.y);
+          this.ctx.rotate((p.rotation * Math.PI) / 180);
+          this.ctx.fillStyle = p.color;
+          this.ctx.globalAlpha = Math.max(0, p.life);
+          this.ctx.fillRect(-p.w / 2, -p.h / 2, p.w, p.h);
+          this.ctx.restore();
+        });
+        this.particles = this.particles.filter(p => p.life > 0 && p.y < this.canvas.height + 50);
+        if (this.particles.length > 0) {
+          this.animationId = requestAnimationFrame(() => this.animate());
+        } else {
+          this.ctx.clearRect(0, 0, this.canvas.width, this.canvas.height);
+          this.animationId = null;
+        }
+      }
+    }
+
+    /* =========================================================
+       ESTADO DA APLICAÇÃO
+       ========================================================= */
+    const audio = new AudioController();
+    const speech = new SpeechController();
+    const confetti = new ConfettiController('confettiCanvas');
+
+    const state = {
+      score: 0,
+      streak: 0,
+      level: 1,
+      selectedTables: [1, 2, 3, 4, 5],
+      selectedOp: 'all',
+      filteredActivities: [],
+      completedActivityIds: new Set(),
+      currentSessionIndex: 0,
+      activeActivity: null,
+      containersData: [],
+      trayItems: [],
+      selectedOption: null,
+      selectedTokenIndex: null
+    };
+
+    const hubScreen = document.getElementById('hubScreen');
+    const gameScreen = document.getElementById('gameScreen');
+    const tableCards = document.querySelectorAll('.table-toggle-card');
+    const opButtons = document.querySelectorAll('.btn-op-tab');
+    const activitiesGrid = document.getElementById('activitiesGrid');
+    const listCounterLabel = document.getElementById('listCounterLabel');
+    const btnStartAdventure = document.getElementById('btnStartAdventure');
+
+    const scoreDisplay = document.getElementById('scoreDisplay');
+    const levelDisplay = document.getElementById('levelDisplay');
+    const streakDisplay = document.getElementById('streakDisplay');
+    const btnVoice = document.getElementById('btnVoice');
+    const btnSound = document.getElementById('btnSound');
+    const btnHomeHub = document.getElementById('btnHomeHub');
+    const brandLogoHome = document.getElementById('brandLogoHome');
+    const btnReturnToHub = document.getElementById('btnReturnToHub');
+    const gameProgressBadge = document.getElementById('gameProgressBadge');
+    const gameActiveTablesLabel = document.getElementById('gameActiveTablesLabel');
+
+    const missionTypeBadge = document.getElementById('missionTypeBadge');
+    const missionPromptText = document.getElementById('missionPromptText');
+    const missionPageTag = document.getElementById('missionPageTag');
+    const trayTitleText = document.getElementById('trayTitleText');
+    const trayCountBadge = document.getElementById('trayCountBadge');
+    const sourceTray = document.getElementById('sourceTray');
+    const containersArea = document.getElementById('containersArea');
+
+    const proofCard = document.getElementById('proofCard');
+    const proofTitleText = document.getElementById('proofTitleText');
+    const proofContentText = document.getElementById('proofContentText');
+
+    const eqFactor1 = document.getElementById('eqFactor1');
+    const eqOperator = document.getElementById('eqOperator');
+    const eqFactor2 = document.getElementById('eqFactor2');
+    const eqBlank = document.getElementById('eqBlank');
+    const questionHint = document.getElementById('questionHint');
+    const optionsGrid = document.getElementById('optionsGrid');
+
+    const btnDistributeStep = document.getElementById('btnDistributeStep');
+    const btnResetActivity = document.getElementById('btnResetActivity');
+    const btnCheckAnswer = document.getElementById('btnCheckAnswer');
+
+    const celebrationModal = document.getElementById('celebrationModal');
+    const modalHeading = document.getElementById('modalHeading');
+    const modalStars = document.getElementById('modalStars');
+    const modalExplanation = document.getElementById('modalExplanation');
+    const modalPointsEarned = document.getElementById('modalPointsEarned');
+    const btnNextMission = document.getElementById('btnNextMission');
+
+    function initApp() {
+      setupHubEventListeners();
+      setupGameEventListeners();
+      refreshFilteredActivities();
+    }
+
+    function setupHubEventListeners() {
+      tableCards.forEach(card => {
+        card.addEventListener('click', () => {
+          const num = parseInt(card.dataset.table, 10);
+          const isSelected = state.selectedTables.includes(num);
+
+          if (isSelected) {
+            if (state.selectedTables.length === 1) {
+              speech.speak("SELECIONE PELO MENOS UMA TABUADA PARA JOGAR!");
+              audio.playError();
+              return;
+            }
+            state.selectedTables = state.selectedTables.filter(t => t !== num);
+            card.classList.remove('selected');
+            card.querySelector('.table-check-indicator').innerHTML = `<span>⬜</span> <span>DESMARCADA</span>`;
+          } else {
+            state.selectedTables.push(num);
+            state.selectedTables.sort((a,b) => a - b);
+            card.classList.add('selected');
+            card.querySelector('.table-check-indicator').innerHTML = `<span>✅</span> <span>ATIVA</span>`;
+          }
+
+          audio.playPop();
+          refreshFilteredActivities();
+        });
+      });
+
+      opButtons.forEach(btn => {
+        btn.addEventListener('click', () => {
+          opButtons.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          state.selectedOp = btn.dataset.op;
+          audio.playPop();
+          refreshFilteredActivities();
+        });
+      });
+
+      document.getElementById('btnSelectAllTables').addEventListener('click', () => {
+        state.selectedTables = [1, 2, 3, 4, 5];
+        updateTableCardsVisual();
+        refreshFilteredActivities();
+        audio.playPop();
+      });
+
+      document.getElementById('btnPreset2and3').addEventListener('click', () => {
+        state.selectedTables = [2, 3];
+        updateTableCardsVisual();
+        refreshFilteredActivities();
+        audio.playPop();
+      });
+
+      document.getElementById('btnPreset4and5').addEventListener('click', () => {
+        state.selectedTables = [4, 5];
+        updateTableCardsVisual();
+        refreshFilteredActivities();
+        audio.playPop();
+      });
+
+      document.getElementById('btnClearTables').addEventListener('click', () => {
+        state.selectedTables = [2];
+        updateTableCardsVisual();
+        refreshFilteredActivities();
+        audio.playPop();
+      });
+
+      btnStartAdventure.addEventListener('click', () => {
+        if (state.filteredActivities.length === 0) return;
+        startAdventureSession(0);
+      });
+
+      btnHomeHub.addEventListener('click', showHubScreen);
+      brandLogoHome.addEventListener('click', showHubScreen);
+      btnReturnToHub.addEventListener('click', showHubScreen);
+    }
+
+    function updateTableCardsVisual() {
+      tableCards.forEach(card => {
+        const num = parseInt(card.dataset.table, 10);
+        const isSelected = state.selectedTables.includes(num);
+        if (isSelected) {
+          card.classList.add('selected');
+          card.querySelector('.table-check-indicator').innerHTML = `<span>✅</span> <span>ATIVA</span>`;
+        } else {
+          card.classList.remove('selected');
+          card.querySelector('.table-check-indicator').innerHTML = `<span>⬜</span> <span>DESMARCADA</span>`;
+        }
+      });
+    }
+
+    function refreshFilteredActivities() {
+      state.filteredActivities = ACTIVITIES_DATABASE.filter(act => {
+        const matchTable = act.tables.some(t => state.selectedTables.includes(t));
+        if (!matchTable) return false;
+        if (state.selectedOp === 'all') return true;
+        return act.type === state.selectedOp;
+      });
+
+      const count = state.filteredActivities.length;
+      const tablesStr = state.selectedTables.join(', ');
+      listCounterLabel.innerHTML = `<strong>${count} ATIVIDADES ENCONTRADAS</strong> PARA AS TABUADAS DO [${tablesStr}]`;
+
+      renderActivitiesGrid();
+    }
+
+    function renderActivitiesGrid() {
+      activitiesGrid.innerHTML = '';
+
+      if (state.filteredActivities.length === 0) {
+        activitiesGrid.innerHTML = `
+          <div style="grid-column: 1 / -1; text-align: center; padding: 3rem; background: white; border-radius: 1rem; color: #64748B;">
+            <p style="font-size: 1.3rem; font-weight: 700;">NENHUMA ATIVIDADE ENCONTRADA COM OS FILTROS SELECIONADOS.</p>
+            <p>SELECIONE MAIS TABUADAS OU ESCOLHA "TODAS" AS OPERAÇÕES ACIMA!</p>
+          </div>
+        `;
+        btnStartAdventure.disabled = true;
+        btnStartAdventure.style.opacity = '0.5';
+        return;
+      }
+
+      btnStartAdventure.disabled = false;
+      btnStartAdventure.style.opacity = '1';
+
+      state.filteredActivities.forEach((act, idx) => {
+        const isCompleted = state.completedActivityIds.has(act.id);
+        const isMult = act.type === 'mult';
+
+        const card = document.createElement('div');
+        card.className = `activity-item-card ${isCompleted ? 'completed' : ''}`;
+
+        const formulaText = isMult ? `${act.a} × ${act.b} = ${act.a * act.b}` : `${act.total} ÷ ${act.n} = ${act.total / act.n}`;
+        const promptBrief = isMult 
+          ? `${act.a} ${act.a === 1 ? act.container : act.containerPlural} COM ${act.b} ${act.b === 1 ? act.item : act.itemPlural}`
+          : `REPARTA ${act.total} ${act.itemPlural} EM ${act.n} ${act.n === 1 ? act.container : act.containerPlural}`;
+
+        card.innerHTML = `
+          <div class="card-top-row">
+            <span class="card-type-pill ${act.type}">
+              ${isMult ? '✖️ MULTIPLICAÇÃO' : '➗ DIVISÃO'}
+            </span>
+            <span class="card-page-badge">PÁGINA ${act.page}</span>
+          </div>
+
+          <div class="card-main-info">
+            <div class="card-emoji-visual">${act.containerEmoji}${act.emoji}</div>
+            <div class="card-text-details">
+              <div class="card-title-text">${promptBrief}</div>
+              <div class="card-formula-chip">
+                <span>⚡</span>
+                <span>${formulaText}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="card-bottom-actions">
+            <div class="card-status-badge ${isCompleted ? 'done' : ''}">
+              <span>${isCompleted ? '⭐ CONCLUÍDA' : '⏳ NÃO JOGADA'}</span>
+            </div>
+            <button class="btn-play-card" data-idx="${idx}">
+              <span>▶️ JOGAR</span>
+            </button>
+          </div>
+        `;
+
+        card.addEventListener('click', () => {
+          startAdventureSession(idx);
+        });
+
+        activitiesGrid.appendChild(card);
+      });
+    }
+
+    function showHubScreen() {
+      gameScreen.classList.remove('active-screen');
+      hubScreen.classList.add('active-screen');
+      refreshFilteredActivities();
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function showGameScreen() {
+      hubScreen.classList.remove('active-screen');
+      gameScreen.classList.add('active-screen');
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+
+    function startAdventureSession(indexInFiltered) {
+      if (indexInFiltered >= state.filteredActivities.length) indexInFiltered = 0;
+      state.currentSessionIndex = indexInFiltered;
+      showGameScreen();
+      loadCurrentSessionActivity();
+    }
+
+    function loadCurrentSessionActivity() {
+      const act = state.filteredActivities[state.currentSessionIndex];
+      state.activeActivity = act;
+      state.selectedOption = null;
+      state.selectedTokenIndex = null;
+      proofCard.style.display = 'none';
+
+      gameProgressBadge.textContent = `MISSÃO ${state.currentSessionIndex + 1} DE ${state.filteredActivities.length}`;
+      gameActiveTablesLabel.textContent = `TABUADAS: ${state.selectedTables.join(', ')}`;
+
+      const isMult = act.type === 'mult';
+      missionTypeBadge.textContent = isMult ? 'MULTIPLICAÇÃO' : 'DIVISÃO';
+      missionTypeBadge.style.background = isMult ? '#4F46E5' : '#0284C7';
+      missionPageTag.textContent = `PÁGINA ${act.page}`;
+
+      if (isMult) {
+        const containerWord = act.a === 1 ? act.container : act.containerPlural;
+        const itemWord = act.b === 1 ? act.item : act.itemPlural;
+        missionPromptText.textContent = `MONTE ${act.a} ${containerWord} COM ${act.b} ${itemWord} EM CADA!`;
+        questionHint.textContent = `AO TODO, QUANTOS(AS) ${act.itemPlural} TEMOS?`;
+        
+        eqFactor1.textContent = act.a;
+        eqOperator.textContent = '×';
+        eqFactor2.textContent = act.b;
+        eqBlank.textContent = '?';
+        eqBlank.classList.remove('filled');
+
+        const targetTotal = act.a * act.b;
+        state.trayItems = [];
+        for (let i = 0; i < targetTotal + 3; i++) {
+          state.trayItems.push({ id: `tray_${i}`, emoji: act.emoji, label: act.item });
+        }
+        state.containersData = [];
+        for (let i = 0; i < act.a; i++) state.containersData.push([]);
+
+        btnDistributeStep.style.display = 'none';
+        trayTitleText.textContent = `PEGUE OS(AS) ${act.itemPlural} E COLOQUE ${act.b} EM CADA ${act.container}:`;
+      } else {
+        const containerWord = act.n === 1 ? act.container : act.containerPlural;
+        missionPromptText.textContent = `REPARTA ${act.total} ${act.itemPlural} EM ${act.n} ${containerWord} IGUAIS!`;
+        questionHint.textContent = `QUANTOS(AS) ${act.itemPlural} FICARAM EM CADA ${act.container}?`;
+
+        eqFactor1.textContent = act.total;
+        eqOperator.textContent = '÷';
+        eqFactor2.textContent = act.n;
+        eqBlank.textContent = '?';
+        eqBlank.classList.remove('filled');
+
+        state.trayItems = [];
+        for (let i = 0; i < act.total; i++) {
+          state.trayItems.push({ id: `tray_${i}`, emoji: act.emoji, label: act.item });
+        }
+        state.containersData = [];
+        for (let i = 0; i < act.n; i++) state.containersData.push([]);
+
+        btnDistributeStep.style.display = 'inline-flex';
+        trayTitleText.textContent = `REPARTA IGUALMENTE TODOS OS(AS) ${act.itemPlural} ABAIXO:`;
+      }
+
+      renderTray();
+      renderContainers();
+      renderOptions();
+
+      const textToSpeak = isMult 
+        ? `${missionPromptText.textContent}. Depois responda: ${act.a} vezes ${act.b} é igual a quanto?`
+        : `${missionPromptText.textContent}. Depois responda: ${act.total} dividido por ${act.n} é igual a quanto?`;
+      speech.speak(textToSpeak);
+    }
+
+    function renderContainers() {
+      containersArea.innerHTML = '';
+      const act = state.activeActivity;
+      const isMult = act.type === 'mult';
+      const targetPerContainer = isMult ? act.b : (act.total / act.n);
+
+      state.containersData.forEach((itemsInBox, boxIdx) => {
+        const box = document.createElement('div');
+        box.className = 'container-box';
+        box.dataset.boxIndex = boxIdx;
+
+        const isExact = itemsInBox.length === targetPerContainer;
+        if (isExact) box.classList.add('ready-state');
+
+        box.innerHTML = `
+          <div class="container-header">
+            <span class="container-name">
+              <span>${act.containerEmoji}</span>
+              <span>${act.container} ${boxIdx + 1}</span>
+            </span>
+            <span class="container-count-badge">${itemsInBox.length} ${itemsInBox.length === 1 ? act.item : act.itemPlural}</span>
+          </div>
+          <div class="container-art">${act.containerEmoji}</div>
+          <div class="container-slots" id="slot_box_${boxIdx}"></div>
+          <div class="container-actions">
+            <button class="btn-container-quick btn-add-item" data-box="${boxIdx}">➕ COLOCAR</button>
+            <button class="btn-container-quick btn-remove-item" data-box="${boxIdx}">➖ TIRAR</button>
+          </div>
+        `;
+
+        const slotEl = box.querySelector(`#slot_box_${boxIdx}`);
+        itemsInBox.forEach((token, tokenIdx) => {
+          const itemEl = document.createElement('div');
+          itemEl.className = 'game-token';
+          itemEl.style.width = '44px';
+          itemEl.style.height = '44px';
+          itemEl.style.fontSize = '1.5rem';
+          itemEl.textContent = token.emoji;
+          itemEl.title = `CLIQUE PARA DEVOLVER ${token.label}`;
+          itemEl.addEventListener('click', (e) => {
+            e.stopPropagation();
+            removeItemFromContainer(boxIdx, tokenIdx);
+          });
+          slotEl.appendChild(itemEl);
+        });
+
+        box.addEventListener('dragover', (e) => {
+          e.preventDefault();
+          box.classList.add('drag-over');
+        });
+        box.addEventListener('dragleave', () => box.classList.remove('drag-over'));
+        box.addEventListener('drop', (e) => {
+          e.preventDefault();
+          box.classList.remove('drag-over');
+          addItemToContainer(boxIdx);
+        });
+
+        box.addEventListener('click', () => {
+          if (state.selectedTokenIndex !== null) addItemToContainer(boxIdx);
+        });
+
+        box.querySelector('.btn-add-item').addEventListener('click', (e) => {
+          e.stopPropagation();
+          addItemToContainer(boxIdx);
+        });
+        box.querySelector('.btn-remove-item').addEventListener('click', (e) => {
+          e.stopPropagation();
+          if (itemsInBox.length > 0) removeItemFromContainer(boxIdx, itemsInBox.length - 1);
+        });
+
+        containersArea.appendChild(box);
+      });
+    }
+
+    function renderTray() {
+      sourceTray.innerHTML = '';
+      trayCountBadge.textContent = state.trayItems.length;
+
+      state.trayItems.forEach((token, idx) => {
+        const tokenEl = document.createElement('div');
+        tokenEl.className = 'game-token';
+        if (state.selectedTokenIndex === idx) tokenEl.classList.add('selected');
+        tokenEl.textContent = token.emoji;
+        tokenEl.draggable = true;
+
+        tokenEl.addEventListener('dragstart', () => { state.selectedTokenIndex = idx; });
+        tokenEl.addEventListener('click', () => {
+          if (state.selectedTokenIndex === idx) {
+            state.selectedTokenIndex = null;
+          } else {
+            state.selectedTokenIndex = idx;
+            audio.playPop();
+          }
+          renderTray();
+        });
+
+        sourceTray.appendChild(tokenEl);
+      });
+    }
+
+    function addItemToContainer(boxIdx) {
+      if (state.trayItems.length === 0) {
+        audio.playError();
+        return;
+      }
+      let token;
+      if (state.selectedTokenIndex !== null && state.selectedTokenIndex < state.trayItems.length) {
+        token = state.trayItems.splice(state.selectedTokenIndex, 1)[0];
+        state.selectedTokenIndex = null;
+      } else {
+        token = state.trayItems.pop();
+      }
+      state.containersData[boxIdx].push(token);
+      audio.playPop();
+      renderTray();
+      renderContainers();
+    }
+
+    function removeItemFromContainer(boxIdx, tokenIdx) {
+      const token = state.containersData[boxIdx].splice(tokenIdx, 1)[0];
+      if (token) {
+        state.trayItems.push(token);
+        audio.playPop();
+        renderTray();
+        renderContainers();
+      }
+    }
+
+    function distributeOneByOne() {
+      if (state.trayItems.length === 0) return;
+      let count = 0;
+      const numBoxes = state.containersData.length;
+      const timer = setInterval(() => {
+        if (state.trayItems.length === 0) {
+          clearInterval(timer);
+          return;
+        }
+        const targetBox = count % numBoxes;
+        addItemToContainer(targetBox);
+        count++;
+      }, 250);
+    }
+
+    function renderOptions() {
+      optionsGrid.innerHTML = '';
+      const act = state.activeActivity;
+      const correctAnswer = act.type === 'mult' ? (act.a * act.b) : (act.total / act.n);
+
+      const optionsSet = new Set();
+      optionsSet.add(correctAnswer);
+
+      const possibleDistractors = [
+        correctAnswer + 1,
+        correctAnswer - 1,
+        correctAnswer + 2,
+        correctAnswer - 2,
+        act.type === 'mult' ? act.a + act.b : act.total - act.n,
+        act.type === 'mult' ? (act.a * (act.b + 1)) : Math.max(1, correctAnswer * 2)
+      ].filter(n => n > 0 && n !== correctAnswer);
+
+      possibleDistractors.sort(() => Math.random() - 0.5);
+      for (const d of possibleDistractors) {
+        if (optionsSet.size < 4) optionsSet.add(d);
+      }
+
+      const optionsArray = Array.from(optionsSet).sort((a, b) => a - b);
+
+      optionsArray.forEach(val => {
+        const btn = document.createElement('button');
+        btn.className = 'btn-option';
+        btn.textContent = val;
+        btn.addEventListener('click', () => selectAnswerOption(val, btn));
+        optionsGrid.appendChild(btn);
+      });
+    }
+
+    function selectAnswerOption(val, btnEl) {
+      state.selectedOption = val;
+      eqBlank.textContent = val;
+      eqBlank.classList.add('filled');
+      audio.playPop();
+
+      document.querySelectorAll('.btn-option').forEach(b => {
+        b.style.borderColor = '#CBD5E1';
+        b.style.background = 'white';
+        b.style.color = '#334155';
+      });
+
+      btnEl.style.borderColor = 'var(--primary)';
+      btnEl.style.background = '#EEF2FF';
+      btnEl.style.color = 'var(--primary)';
+    }
+
+    function checkAnswer() {
+      const act = state.activeActivity;
+      const isMult = act.type === 'mult';
+      const correctAnswer = isMult ? (act.a * act.b) : (act.total / act.n);
+
+      if (state.selectedOption === null) {
+        speech.speak("ESCOLHA UM NÚMERO PARA A RESPOSTA!");
+        audio.playError();
+        eqBlank.parentElement.classList.add('shake-animation');
+        setTimeout(() => eqBlank.parentElement.classList.remove('shake-animation'), 400);
+        return;
+      }
+
+      const targetPerBox = isMult ? act.b : (act.total / act.n);
+      const isBoxesCorrect = state.containersData.every(box => box.length === targetPerBox);
+      const isAnswerCorrect = state.selectedOption === correctAnswer;
+
+      if (isAnswerCorrect && isBoxesCorrect) {
+        handleSuccess(act, correctAnswer);
+      } else if (!isBoxesCorrect) {
+        audio.playError();
+        containersArea.classList.add('shake-animation');
+        setTimeout(() => containersArea.classList.remove('shake-animation'), 400);
+
+        if (isMult) {
+          speech.speak(`ATENÇÃO! COLOQUE EXATAMENTE ${act.b} ${act.itemPlural} EM CADA ${act.container}!`);
+        } else {
+          speech.speak(`ATENÇÃO! REPARTA TODOS OS ITENS IGUALMENTE! CADA ${act.container} DEVE TER A MESMA QUANTIDADE.`);
+        }
+      } else {
+        audio.playError();
+        eqBlank.parentElement.classList.add('shake-animation');
+        setTimeout(() => eqBlank.parentElement.classList.remove('shake-animation'), 400);
+        speech.speak("QUASE LÁ! CONTE NOVAMENTE E TENTE OUTRA OPÇÃO!");
+      }
+    }
+
+    function handleSuccess(act, correctAnswer) {
+      audio.playSuccess();
+      confetti.start();
+
+      state.completedActivityIds.add(act.id);
+      state.score += 100 + (state.streak * 20);
+      state.streak += 1;
+      if (state.score >= 500 && state.level === 1) state.level = 2;
+      if (state.score >= 1200 && state.level === 2) state.level = 3;
+
+      scoreDisplay.textContent = state.score;
+      streakDisplay.textContent = state.streak;
+      levelDisplay.textContent = `NÍVEL ${state.level}`;
+
+      showVisualProof(act, correctAnswer);
+
+      setTimeout(() => {
+        audio.playFanfare();
+        modalHeading.textContent = state.streak > 2 ? `SEQUÊNCIA INCRÍVEL! 🔥 ${state.streak}X` : 'MUITO BEM! PARABÉNS!';
+        modalPointsEarned.textContent = `+${100 + ((state.streak - 1) * 20)} PONTOS`;
+
+        if (act.type === 'mult') {
+          modalExplanation.innerHTML = `
+            <strong>${act.a} × ${act.b} = ${correctAnswer}</strong><br>
+            VOCÊ DOMINOU O AGRUPAMENTO DA TABUADA DE MULTIPLICAÇÃO!
+          `;
+          speech.speak(`PARABÉNS! ${act.a} VEZES ${act.b} É IGUAL A ${correctAnswer}!`);
+        } else {
+          modalExplanation.innerHTML = `
+            <strong>${act.total} ÷ ${act.n} = ${correctAnswer}</strong><br>
+            VOCÊ REPARTIU IGUALMENTE EM PARTES IGUAIS SEM SOBRAS!
+          `;
+          speech.speak(`EXCELENTE! ${act.total} DIVIDIDO POR ${act.n} É IGUAL A ${correctAnswer}!`);
+        }
+
+        celebrationModal.style.display = 'flex';
+      }, 700);
+    }
+
+    function showVisualProof(act, correctAnswer) {
+      proofCard.style.display = 'block';
+      if (act.type === 'mult') {
+        proofTitleText.textContent = `COMPROVADO! MULTIPLICAÇÃO É A ADIÇÃO DE PARCELAS IGUAIS:`;
+        let chips = '';
+        for (let i = 0; i < act.a; i++) {
+          chips += `<span class="chip-group">${act.b} ${act.itemPlural}</span>`;
+          if (i < act.a - 1) chips += `<span>+</span>`;
+        }
+        chips += `<span>=</span><strong>${correctAnswer} ${act.itemPlural}</strong>`;
+
+        proofContentText.innerHTML = `
+          <div>${act.a} GRUPOS DE ${act.b} = <strong>${act.a} × ${act.b} = ${correctAnswer}</strong></div>
+          <div class="proof-addition-chips">${chips}</div>
+        `;
+      } else {
+        proofTitleText.textContent = `COMPROVADO! DIVISÃO É REPARTIR IGUALMENTE:`;
+        proofContentText.innerHTML = `
+          <div>TOTAL DE ${act.total} ${act.itemPlural} REPARTIDOS EM ${act.n} ${act.containerPlural}.</div>
+          <div>CADA ${act.container} RECEBEU EXATAMENTE <strong>${correctAnswer} ${act.itemPlural}</strong>!</div>
+          <div style="font-weight: 800; font-size: 1.35rem; color: #166534; margin-top: 0.25rem;">
+            ${act.total} ÷ ${act.n} = ${correctAnswer}
+          </div>
+        `;
+      }
+    }
+
+    function nextMission() {
+      celebrationModal.style.display = 'none';
+      state.currentSessionIndex++;
+
+      if (state.currentSessionIndex >= state.filteredActivities.length) {
+        speech.speak("SENSACIONAL! VOCÊ COMPLETOU TODAS AS ATIVIDADES DAS TABUADAS SELECIONADAS!");
+        showHubScreen();
+      } else {
+        loadCurrentSessionActivity();
+      }
+    }
+
+    function setupGameEventListeners() {
+      btnVoice.addEventListener('click', () => {
+        speech.enabled = !speech.enabled;
+        btnVoice.textContent = speech.enabled ? '🗣️' : '🔇';
+        if (speech.enabled) speech.speak(missionPromptText.textContent);
+      });
+
+      btnSound.addEventListener('click', () => {
+        audio.enabled = !audio.enabled;
+        btnSound.textContent = audio.enabled ? '🔊' : '🔈';
+      });
+
+      btnDistributeStep.addEventListener('click', distributeOneByOne);
+      btnResetActivity.addEventListener('click', loadCurrentSessionActivity);
+      btnCheckAnswer.addEventListener('click', checkAnswer);
+      btnNextMission.addEventListener('click', nextMission);
+    }
+
+    window.addEventListener('DOMContentLoaded', initApp);
+  </script>
+</body>
+</html>
